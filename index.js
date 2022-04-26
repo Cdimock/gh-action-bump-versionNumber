@@ -41,7 +41,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
 
     // if (process.env['INPUT_TARGET-BRANCH']) {
       // We want to override the branch that we are pulling / pushing to
-      targetBranch = process.env['INPUT_TARGET-BRANCH'];
+      targetBranch = process.env['target-branch'];
     // }
     console.log('Target Branch: ', targetBranch);
     console.log('Release Tag:', releaseTag);

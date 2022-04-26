@@ -43,6 +43,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
       // We want to override the branch that we are pulling / pushing to
       targetBranch = process.env['INPUT_TARGET-BRANCH'];
     // }
+    console.log('Target Branch: ', targetBranch);
     console.log('Release Tag:', releaseTag);
     console.log('Version Number in package.json from release tag:', currentVersionNumber);
     // do it in the current checked out github branch (DETACHED HEAD)
@@ -79,11 +80,14 @@ const workspace = process.env.GITHUB_WORKSPACE;
     //   // First fetch to get updated local version of branch
     //   await runInWorkspace('git', ['fetch']);
     // }
+    console.log("Checking out ", targetBranch);
     await runInWorkspace('git', ['checkout', targetBranch]);
 
+    console.log("Creating branch ", `bump-to-v${nextVersionNumber}`);
     await runInWorkspace('git', ['checkout', '-b', `bump-to-v${nextVersionNumber}`]);
     
     //update build Number here
+    console.log("Updating version number....");
     updateVersionNumber(nextVersionNumber);
     
     console.log('version in package.json', getPackageJson().version);
@@ -100,6 +104,7 @@ const workspace = process.env.GITHUB_WORKSPACE;
 
     const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
 
+    console.log("pushing to branch origin....");
     await runInWorkspace('git', ['push', 'origin']);
     // await runInWorkspace('git', ['push', remoteRepo, '--follow-tags']);
     // await runInWorkspace('git', ['push', remoteRepo, '--tags']);

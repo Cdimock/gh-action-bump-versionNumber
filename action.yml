@@ -1,0 +1,21 @@
+name: Automated Version Number Bump
+description: Automated version bump for package.json.
+runs:
+  using: node12
+  main: index.js
+branding:
+  icon: chevron-up
+  color: blue
+inputs:
+  PACKAGEJSON_DIR:
+    description: 'Custom dir to the package.json file'
+    default: ''
+    required: false
+  target-branch:
+    description: 'The branch to perform the version bump on'
+    default: ''
+    required: false
+  commit-message:
+    description: 'Set a custom commit message for version bump commit'
+    default: ''
+    required: false

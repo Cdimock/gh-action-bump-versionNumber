@@ -1,0 +1,27 @@
+name: 'Bump Version Number'
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  bump-version:
+    name: 'Bump version on main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout source code'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      - name: 'cat package.json'
+        run: cat ./package.json
+      - name: 'Automated Version Number Bump'
+        id: versionNumber-bump
+        uses: 'Cdimock/gh-action-bump-versionNumber@main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          target-branch: 'main'
+      - name: 'cat package.json'
+        run: cat ./package.json
